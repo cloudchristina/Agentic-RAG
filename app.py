@@ -5,13 +5,17 @@ from typing import List, Tuple
 import shutil
 
 from indexer import (
-    build_all_document_tools,
+    build_all_doc_tools,
     create_tool_index,
     get_tool_retriever,
     get_indexed_files,
     DATA_DIR,
+    init_settings,
 )
 from agent import create_agent, chat
+
+# Initialize LlamaIndex settings (embedding model, LLM)
+init_settings()
 
 # Global state
 agent = None
@@ -19,16 +23,14 @@ tool_index = None
 
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-
 def get_pdf_files() -> List[Path]:
     """
     Get list of PDF files in data directory.
-    
+
     Returns:
         List[Path]: List of PDF file paths.
     """
     return list(DATA_DIR.glob("*.pdf"))
-
 
 def initialize_agent():
     """
@@ -46,14 +48,13 @@ def initialize_agent():
         return "No documents indexed. Please upload PDFs."
 
     pdf_paths = [str(p) for p in pdf_files]
-    all_tools = build_all_document_tools(pdf_paths)
+    all_tools = build_all_doc_tools(pdf_paths)
     tool_index = create_tool_index(all_tools)
     retriever = get_tool_retriever(tool_index, top_k=4)
     agent = create_agent(retriever)
 
     indexed = get_indexed_files()
     return f"Indexed {len(indexed)} documents: {', '.join(indexed)}"
-
 
 def upload_files(files) -> str:
     """
@@ -81,7 +82,6 @@ def upload_files(files) -> str:
     status = initialize_agent()
     return status
 
-
 def clear_documents() -> str:
     """
     Clear all uploaded documents.
@@ -103,7 +103,6 @@ def clear_documents() -> str:
     tool_index = None
     return "All documents cleared."
 
-
 def get_status() -> str:
     """
     Get current indexing status.
@@ -114,7 +113,6 @@ def get_status() -> str:
     if indexed:
         return f"Indexed {len(indexed)} documents: {', '.join(indexed)}"
     return "No documents indexed. Please upload PDFs."
-
 
 def respond(message: str, history: List[Tuple[str, str]]) -> str:
     """
@@ -142,7 +140,6 @@ def respond(message: str, history: List[Tuple[str, str]]) -> str:
         return response
     except Exception as e:
         return f"Error: {str(e)}"
-
 
 # Build the UI
 with gr.Blocks(title="Agentic RAG Assistant") as app:
@@ -184,7 +181,6 @@ with gr.Blocks(title="Agentic RAG Assistant") as app:
         fn=clear_documents,
         outputs=[status_text],
     )
-
 
 # Initialize on startup
 if __name__ == "__main__":

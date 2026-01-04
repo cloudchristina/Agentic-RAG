@@ -55,8 +55,8 @@ User Query
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/agentic-rag.git
-cd agentic-rag
+git clone https://github.com/cloudchristina/Agentic-RAG.git
+cd Agentic-RAG
 ```
 
 2. Install dependencies:
@@ -97,7 +97,7 @@ python app.py
 agentic_rag/
 ├── app.py              # Gradio UI application
 ├── agent.py            # FunctionAgent setup
-├── orig.py             # Indexing and tool creation
+├── indexer.py          # Indexing and tool creation
 ├── helper.py           # Environment utilities
 ├── requirements.txt    # Python dependencies
 ├── .env.example        # Environment template

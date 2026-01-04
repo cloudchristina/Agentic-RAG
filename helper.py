@@ -9,7 +9,6 @@ def load_env():
     else:
         print("No .env file found.")
 
-
 def get_groq_api_key():
     """Retrieve the Groq API key from environment variables."""
     load_env()

@@ -42,7 +42,6 @@ def get_doc(pdf_path: str) -> str:
     """
     return Path(pdf_path).stem
 
-
 # 4. Build tools for a single document
 def build_doc_tools(pdf_path: str) -> Tuple[list[QueryEngineTool], VectorStoreIndex, SummaryIndex]:
     """
@@ -249,7 +248,7 @@ def build_all_doc_tools(pdf_paths: List[str]) -> List[QueryEngineTool]:
     return all_tools
 
 # 11. Create tool index for dynamic retrieval
-def create_tool_index(tools: List[QueryEngineTool]) -> VectorStoreIndex:
+def create_tool_index(tools: List[QueryEngineTool]) -> ObjectIndex:
     """
     Create an ObjectIndex over all tools for dynamic retrieval.
 
@@ -257,17 +256,17 @@ def create_tool_index(tools: List[QueryEngineTool]) -> VectorStoreIndex:
         tools (List[QueryEngineTool]): List of QueryEngineTools.
 
     Returns:
-        VectorStoreIndex: An ObjectIndex over the tools.
+        ObjectIndex: An ObjectIndex over the tools.
     """
-    return VectorStoreIndex.from_objects(tools)
+    return ObjectIndex.from_objects(tools, index_cls=VectorStoreIndex)
 
 # 12. Get tool retriever
-def get_tool_retriever(tool_index: VectorStoreIndex, top_k: int = 2):
+def get_tool_retriever(tool_index: ObjectIndex, top_k: int = 2):
     """
     Get a retriever that returns top-k relevant tools.
 
     Args:
-        tool_index (VectorStoreIndex): The tool index.
+        tool_index (ObjectIndex): The tool index.
         top_k (int): Number of top relevant tools to retrieve.  Defaults to 2.
 
     Returns:

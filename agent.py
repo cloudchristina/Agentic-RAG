@@ -3,11 +3,10 @@ from llama_index.llms.groq import Groq
 
 from helper import get_groq_api_key
 
-
 def create_agent(tool_retriever):
     """
     Create a FunctionAgent with tool retriever.
-    
+
     Args:
         tool_retriever: A retriever that provides relevant tools.
     Returns:
@@ -28,7 +27,6 @@ def create_agent(tool_retriever):
     )
 
     return agent
-
 
 async def chat(agent: FunctionAgent, message: str) -> str:
     """
