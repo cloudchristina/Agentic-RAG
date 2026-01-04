@@ -69,7 +69,7 @@ def build_doc_tools(pdf_path: str) -> Tuple[list[QueryEngineTool], VectorStoreIn
     vector_engine = vector_index.as_query_engine(similarity_top_k=2)
     summary_engine = summary_index.as_query_engine(
         response_mode="tree_summarize",
-        use_aync=True,
+        use_async=True,
     )
 
     # 4. create tools
@@ -195,7 +195,7 @@ def rebuild_tools_for_document(pdf_path: str) -> List[QueryEngineTool]:
         vector_engine = vector_index.as_query_engine(similarity_top_k=2)
         summary_engine = summary_index.as_query_engine(
             response_mode="tree_summarize",
-            use_aync=True,
+            use_async=True,
         )
 
         # create tools

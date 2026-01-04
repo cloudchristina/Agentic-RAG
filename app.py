@@ -50,7 +50,7 @@ def initialize_agent():
     pdf_paths = [str(p) for p in pdf_files]
     all_tools = build_all_doc_tools(pdf_paths)
     tool_index = create_tool_index(all_tools)
-    retriever = get_tool_retriever(tool_index, top_k=4)
+    retriever = get_tool_retriever(tool_index, top_k=2)
     agent = create_agent(retriever)
 
     indexed = get_indexed_files()
