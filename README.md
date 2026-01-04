@@ -8,7 +8,7 @@ An AI-powered document Q&A system that lets you upload PDF documents and ask que
 - **Agentic RAG**: Uses FunctionAgent with dynamic tool selection
 - **Per-Document Tools**: Each document gets vector search + summary tools
 - **Persistent Storage**: Indices are cached to disk for fast startup
-- **Free & Fast**: Uses Groq (Llama 3.3 70B) + local HuggingFace embeddings
+- **Free & Fast**: Uses Groq (Llama 4 Scout 17B) + local HuggingFace embeddings
 
 ## Architecture
 
@@ -47,7 +47,7 @@ User Query
 
 ## Models Used
 
-- **LLM**: Groq Llama 3.3 70B Versatile (free, fast inference)
+- **LLM**: Groq Llama 4 Scout 17B (free, fast inference, higher rate limits)
 - **Embeddings**: HuggingFace BGE-small-en-v1.5 (local, no API needed)
 - **Framework**: LlamaIndex with FunctionAgent
 
@@ -113,9 +113,32 @@ agentic_rag/
 4. **Tool Index**: ObjectIndex enables dynamic tool selection based on query
 5. **Agent Execution**: FunctionAgent uses relevant tools to answer queries
 
+## Test
+
+Download sample PDFs to test the application:
+
+```bash
+mkdir -p test/
+wget -O test/metagpt.pdf "https://openreview.net/pdf?id=VtmBAGCN7o"
+wget -O test/longlora.pdf "https://openreview.net/pdf?id=6PmJoRfdaK"
+wget -O test/loftq.pdf "https://openreview.net/pdf?id=LzPWWPAdY4"
+wget -O test/swebench.pdf "https://openreview.net/pdf?id=VTF8yNQM66"
+wget -O test/selfrag.pdf "https://openreview.net/pdf?id=hSyW5go0v8"
+# wget -O test/zipformer.pdf "https://openreview.net/pdf?id=9WD9KwssyT"
+# wget -O test/values.pdf "https://openreview.net/pdf?id=yV6fD7LYkF"
+# wget -O test/finetune_fair_diffusion.pdf "https://openreview.net/pdf?id=hnrB5YHoYu"
+# wget -O test/knowledge_card.pdf "https://openreview.net/pdf?id=WbWtOYIzIK"
+# wget -O test/metra.pdf "https://openreview.net/pdf?id=c5pwL0Soay"
+# wget -O test/vr_mcl.pdf "https://openreview.net/pdf?id=TpD2aG1h0D"
+```
+
+Then run `python app.py` and try queries like:
+- "What is MetaGPT?"
+- "Summarize zipformer"
+- "Tell me about the evaluation dataset used in MetaGPT and compare it against longlora"
+
 ## Requirements
 
 - Python 3.10+
 - Groq API key (free tier available)
 - ~500MB disk space for embeddings model
-

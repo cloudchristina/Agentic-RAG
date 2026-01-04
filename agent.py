@@ -13,7 +13,7 @@ def create_agent(tool_retriever):
         FunctionAgent: An agent configured with the tool retriever and LLM.
     """
     api_key = get_groq_api_key()  # Ensure env loaded
-    llm = Groq(model="llama-3.3-70b-versatile", api_key=api_key)
+    llm = Groq(model="meta-llama/llama-4-scout-17b-16e-instruct", api_key=api_key)
 
     agent = FunctionAgent(
         tool_retriever=tool_retriever,

@@ -20,7 +20,7 @@ from helper import get_groq_api_key
 # 1. Initialize settings
 def init_settings():
     api_key = get_groq_api_key()
-    Settings.llm = Groq(model="llama-3.3-70b-versatile", api_key=api_key)
+    Settings.llm = Groq(model="meta-llama/llama-4-scout-17b-16e-instruct", api_key=api_key)
     Settings.embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
 
 # 2. Define storage paths
