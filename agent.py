@@ -36,7 +36,19 @@ async def chat(agent: FunctionAgent, message: str) -> str:
         agent (FunctionAgent): The agent to process the message.
         message (str): The user's message.
     Returns:
-        str: The agent's response.
+        str: The agent's response with tool usage info.
     """
     response = await agent.run(message)
-    return str(response)
+
+    # Extract tool calls from response
+    tool_info = []
+    if hasattr(response, 'tool_calls') and response.tool_calls:
+        for tc in response.tool_calls:
+            tool_name = tc.tool_name if hasattr(tc, 'tool_name') else str(tc)
+            tool_info.append(tool_name)
+
+    result = str(response)
+    if tool_info:
+        result += f"\n\n---\n**Tools used:** {', '.join(tool_info)}"
+
+    return result
